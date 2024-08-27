@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criptografia e Descriptografia</title>
+    <style>
+        /* CSS para estilizar a página */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Criptografia e Descriptografia</h1>
+        <p class="error" id="error-message">Letras maiúsculas e caracteres especiais não serão aceitos.</p>
+        <textarea id="input-text" placeholder="Digite o texto aqui..."></textarea>
+        <button onclick="encrypt()">Criptografar</button>
+        <button onclick="decrypt()">Descriptografar</button>
+        <button onclick="copyToClipboard()">Copiar</button>
+        <textarea id="output-text" readonly placeholder="Resultado será exibido aqui..."></textarea>
+    </div>
+    <div class="footer">
+        Desenvolvido por [Seu Nome] - 2024
+    </div>
+
+    <script>
+        // JavaScript para funcionalidade de criptografia e descriptografia
+        const encryptionKey = {
+            'e': 'enter',
+            'i': 'imes',
+            'a': 'ai',
+            'o': 'ober',
+            'u': 'ufat'
+        };
+        
+        const decryptionKey = {
+            'enter': 'e',
+            'imes': 'i',
+            'ai': 'a',
+            'ober': 'o',
+            'ufat': 'u'
+        };
+
+        function encrypt() {
+            let input = document.getElementById('input-text').value;
+            if (!isValidInput(input)) {
+                alert('Por favor, use apenas letras minúsculas e sem caracteres especiais.');
+                return;
+            }
+            let encryptedText = input;
+            for (let key in encryptionKey) {
+                let regex = new RegExp(key, 'g');
+                encryptedText = encryptedText.replace(regex, encryptionKey[key]);
+            }
+            document.getElementById('output-text').value = encryptedText;
+        }
+
+        function decrypt() {
+            let input = document.getElementById('input-text').value;
+            if (!isValidInput(input)) {
+                alert('Por favor, use apenas letras minúsculas e sem caracteres especiais.');
+                return;
+            }
+            let decryptedText = input;
+            for (let key in decryptionKey) {
+                let regex = new RegExp(key, 'g');
+                decryptedText = decryptedText.replace(regex, decryptionKey[key]);
+            }
+            document.getElementById('output-text').value = decryptedText;
+        }
+
+        function copyToClipboard() {
+            let outputText = document.getElementById('output-text');
+            outputText.select();
+            document.execCommand('copy');
+            alert('Texto copiado para a área de transferência!');
+        }
+
+        function isValidInput(text) {
+            return /^[a-z\s]+$/.test(text);
+        }
+    </script>
+</body>
+</html>
